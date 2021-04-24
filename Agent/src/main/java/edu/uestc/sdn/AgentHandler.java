@@ -7,6 +7,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.nio.charset.Charset;
 
+import struct.*;
+
+
 public class AgentHandler extends SimpleChannelInboundHandler<ACProtocol> {
 
     private int count;
@@ -14,32 +17,40 @@ public class AgentHandler extends SimpleChannelInboundHandler<ACProtocol> {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //使用客户端发送10条数据 "今天天气冷，吃火锅" 编号
 
-        for(int i = 0; i< 5; i++) {
-            String mes = "今天天气冷，吃火锅";
-            byte[] content = mes.getBytes(Charset.forName("utf-8"));
-            int length = mes.getBytes(Charset.forName("utf-8")).length;
+        Packet_in packet_in = new Packet_in();
+        packet_in.ingress_port = 1;
+        packet_in.reason = 2;
 
-            //创建协议包对象
-            ACProtocol ACProtocol = new ACProtocol();
-            ACProtocol.setLen(length);
-            ACProtocol.setContent(content);
-            ctx.writeAndFlush(ACProtocol);
 
-        }
+        byte[] contentIn = JavaStruct.pack(packet_in);
+
+        ACProtocol msg = new ACProtocol();
+        msg.setLen(contentIn.length);
+        msg.setContent(contentIn);
+
+        ctx.writeAndFlush(msg);
+
 
     }
 
 //    @Override
     protected void channelRead0(ChannelHandlerContext ctx, ACProtocol msg) throws Exception {
-
+        //接收到数据，并处理
         int len = msg.getLen();
         byte[] content = msg.getContent();
 
-        System.out.println("客户端接收到消息如下");
-        System.out.println("长度=" + len);
-        System.out.println("内容=" + new String(content, Charset.forName("utf-8")));
+        Packet_in packet_out = new Packet_in();
 
-        System.out.println("客户端接收消息数量=" + (++this.count));
+        try {
+            JavaStruct.unpack(packet_out, content);
+            
+
+        }catch(StructException e) {
+                e.printStackTrace();
+        }
+        
+        System.out.print("ingress :"+packet_out.ingress_port);
+        System.out.print("reason :"+packet_out.reason);
 
     }
 

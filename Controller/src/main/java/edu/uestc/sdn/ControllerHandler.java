@@ -8,6 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.nio.charset.Charset;
 import java.util.UUID;
 
+import struct.*;
 
 //处理业务的handler
 public class ControllerHandler extends SimpleChannelInboundHandler<ACProtocol>{
@@ -24,28 +25,35 @@ public class ControllerHandler extends SimpleChannelInboundHandler<ACProtocol>{
 
         //接收到数据，并处理
         int len = msg.getLen();
-        byte[] content = msg.getContent();
+        byte[] contentIn = msg.getContent();
 
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("服务器接收到信息如下");
-        System.out.println("长度=" + len);
-        System.out.println("内容=" + new String(content, Charset.forName("utf-8")));
+        Packet_in packet_in = new Packet_in();
 
-        System.out.println("服务器接收到消息包数量=" + (++this.count));
+        try {
+            JavaStruct.unpack(packet_in, contentIn);
+            
+
+        }catch(StructException e) {
+                e.printStackTrace();
+        }
+        
+        System.out.print("ingress :"+packet_in.ingress_port);
+        System.out.print("reason :"+packet_in.reason);
+
 
         //回复消息
+        Packet_in packet_out = new Packet_in();
+        packet_out.ingress_port = 11;
+        packet_out.reason = 21;
 
-        String responseContent = UUID.randomUUID().toString();
-        int responseLen = responseContent.getBytes("utf-8").length;
-        byte[]  responseContent2 = responseContent.getBytes("utf-8");
-        //构建一个协议包
-        ACProtocol reply = new ACProtocol();
-        reply.setLen(responseLen);
-        reply.setContent(responseContent2);
 
-        ctx.writeAndFlush(reply);
+        byte[] contentOut = JavaStruct.pack(packet_out);
+
+        ACProtocol msgOut = new ACProtocol();
+        msgOut.setLen(contentOut.length);
+        msgOut.setContent(contentOut);
+
+        ctx.writeAndFlush(msgOut);
 
 
     }

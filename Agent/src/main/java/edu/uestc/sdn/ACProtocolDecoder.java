@@ -6,10 +6,10 @@ import io.netty.handler.codec.ReplayingDecoder;
 
 import java.util.List;
 
+
 public class ACProtocolDecoder extends ReplayingDecoder<Void> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        System.out.println("ACProtocolDecoder decode 被调用");
         //需要将得到二进制字节码-> ACProtocol 数据包(对象)
         int length = in.readInt();
 
