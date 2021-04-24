@@ -5,14 +5,19 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import java.nio.charset.Charset;
-import java.util.UUID;
+
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
+
+
 
 import struct.*;
 
 //处理业务的handler
 public class ControllerHandler extends SimpleChannelInboundHandler<ACProtocol>{
-    public int count;
+
+    private static ChannelGroup  channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
@@ -37,8 +42,8 @@ public class ControllerHandler extends SimpleChannelInboundHandler<ACProtocol>{
                 e.printStackTrace();
         }
         
-        System.out.print("ingress :"+packet_in.ingress_port);
-        System.out.print("reason :"+packet_in.reason);
+        System.out.println("ingress :"+packet_in.ingress_port);
+        System.out.println("reason :"+packet_in.reason);
 
 
         //回复消息
@@ -57,4 +62,19 @@ public class ControllerHandler extends SimpleChannelInboundHandler<ACProtocol>{
 
 
     }
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("[switch]" + ctx.channel().remoteAddress() + " connected.");
+        channelGroup.add(ctx.channel());
+
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("[switch]" + ctx.channel().remoteAddress() + " disconnected.");
+
+    }
+
+
 }

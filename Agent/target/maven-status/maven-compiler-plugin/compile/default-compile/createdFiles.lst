@@ -2,6 +2,7 @@ edu/uestc/sdn/ACProtocolDecoder.class
 edu/uestc/sdn/AgentInitializer.class
 edu/uestc/sdn/Agent.class
 edu/uestc/sdn/AgentHandler.class
+edu/uestc/sdn/HeartBeat.class
 edu/uestc/sdn/ACProtocolEncoder.class
 edu/uestc/sdn/ACProtocol.class
 edu/uestc/sdn/Packet_in.class

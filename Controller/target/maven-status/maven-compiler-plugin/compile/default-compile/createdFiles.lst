@@ -1,4 +1,6 @@
 edu/uestc/sdn/ACProtocolDecoder.class
+edu/uestc/sdn/HeartBeat$1.class
+edu/uestc/sdn/HeartBeat.class
 edu/uestc/sdn/Controller.class
 edu/uestc/sdn/ACProtocolEncoder.class
 edu/uestc/sdn/ACProtocol.class

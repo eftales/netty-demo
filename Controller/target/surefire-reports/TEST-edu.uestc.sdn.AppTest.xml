@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/myp4/mvn-netty/Controller/target/surefire/surefirebooter1795395277108091206.jar /home/myp4/mvn-netty/Controller/target/surefire 2021-04-24T17-50-45_866-jvmRun1 surefire5372110421188120578tmp surefire_015293331537394050766tmp"/>
+    <property name="sun.java.command" value="/home/myp4/mvn-netty/Controller/target/surefire/surefirebooter11627517965552732221.jar /home/myp4/mvn-netty/Controller/target/surefire 2021-04-24T22-44-23_584-jvmRun1 surefire8392074630050026772tmp surefire_0604835895013425484tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/myp4/mvn-netty/Controller/target/test-classes:/home/myp4/mvn-netty/Controller/target/classes:/home/myp4/.m2/repository/com/github/tehleo/junion/1.1.1/junion-1.1.1.jar:/home/myp4/.m2/repository/io/netty/netty-all/4.1.20.Final/netty-all-4.1.20.Final.jar:/home/myp4/.m2/repository/com/javastruct/javastruct/0.1/javastruct-0.1.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -32,7 +32,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/myp4/mvn-netty/Controller/target/surefire/surefirebooter1795395277108091206.jar"/>
+    <property name="surefire.real.class.path" value="/home/myp4/mvn-netty/Controller/target/surefire/surefirebooter11627517965552732221.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.11-ea+4-Ubuntu-0ubuntu3.16.04.1"/>
     <property name="user.name" value="myp4"/>
