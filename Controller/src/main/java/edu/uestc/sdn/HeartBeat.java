@@ -1,6 +1,7 @@
 package edu.uestc.sdn;
 
-
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -48,10 +49,21 @@ public class HeartBeat extends ChannelInboundHandlerAdapter {
             msgOut.setLen(contentOut.length);
             msgOut.setContent(contentOut);
     
-            ctx.writeAndFlush(msgOut);
+            ChannelFuture future = ctx.writeAndFlush(msgOut);
+
+            future.addListener(new ChannelFutureListener() {
+                // write操作完成后调用的回调函数
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if(!future.isSuccess()) { // 是否成功
+                        System.out.println("write操作失败,已失去和switch的连接");
+                        ctx.close(); // 如果需要在write后关闭连接，close应该写在operationComplete中。注意close方法的返回值也是ChannelFuture
+                    }                    
+                }
+            });
 
             //如果发生空闲，我们关闭通道
-           // ctx.channel().close();
+            // ctx.channel().close();
         }
     }
 
@@ -60,5 +72,5 @@ public class HeartBeat extends ChannelInboundHandlerAdapter {
         //cause.printStackTrace();
         ctx.close();
     }
-    
+
 }
