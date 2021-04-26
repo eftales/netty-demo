@@ -4,3 +4,10 @@
 ```
 mvn clean  package assembly:single
 ```
+
+## dependency
+
+```
+cd lib
+mvn install:install-file -DgroupId=com.javastruct -DartifactId=javastruct -Dversion=0.1 -Dpackaging=jar -Dfile=javastruct-0.1.jar
+```
