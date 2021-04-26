@@ -12,8 +12,16 @@ import struct.*;
 
 
 public class Agent {
+    public static String hostname;
     public static void main(String[] args)  throws  Exception{
-
+        if (args.length > 0){
+            hostname = args[0];
+        }
+        else{
+            hostname = "sw1";
+        }
+        System.out.println("This is "+hostname);
+        
         EventLoopGroup group = new NioEventLoopGroup();
 
         try {
